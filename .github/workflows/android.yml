@@ -13,15 +13,18 @@ jobs:
       - name: Descargar codigo del repositorio
         uses: actions/checkout@v4
 
-      - name: Configurar Java 11
+      - name: Configurar Java 17
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Configurar Android SDK y Aceptar Licencias
-        uses: android-actions/setup-android@v3
+      - name: Aceptar Licencias de Android de forma Nativa
+        run: |
+          mkdir -p $ANDROID_HOME/licenses
+          echo -e "\n893aacd6d526d04b248a77ef32d5406494d4ffb8\n24333f8a63b6825ea9c5514f83c2829b004d1fee\n76d1a2d0535b836bf7d3ef385f76a53718663712\n84831b9409646a918e30573bab4c9c91346d8abd\n504667f4c0de7af1a06de9f4b1727b84351f2910\nf224f5c59b6fe12e302646a0bb3c58319f2425ba" > $ANDROID_HOME/licenses/android-sdk-license
+          echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > $ANDROID_HOME/licenses/android-sdk-preview-license
 
       - name: Dar permisos de ejecucion a Gradle
         run: chmod +x gradlew
